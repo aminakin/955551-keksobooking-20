@@ -1,13 +1,12 @@
 'use strict';
+var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+var CHECK_HOURS = ['12:00', '13:00', '14:00'];
+var INN_TYPES = ['palace', 'flat', 'house', 'bungalo'];
+var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinList = document.querySelector('.map__pins');
-var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-var CHECK_TIME = ['12:00', '13:00', '14:00'];
-var INN_TYPE = ['palace', 'flat', 'house', 'bungalo'];
-var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-
 
 var getRandomInt = function (min, max) {
   min = Math.ceil(min);
@@ -15,11 +14,11 @@ var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
-var getMoke = function () {
+var getMock = function () {
   var result = [];
 
   for (var i = 0; i < 8; i++) {
-    var mokeElement = {
+    var mockElement = {
       'author': {
         'avatar': ''
       },
@@ -41,26 +40,26 @@ var getMoke = function () {
         'y': 0
       }
     };
-    mokeElement.author.avatar = 'img/avatars/user0' + (i + 1) + '.png';
-    mokeElement.offer.title = 'Заголовок ' + (i + 1);
-    mokeElement.location.x = getRandomInt(0, 1201);
-    mokeElement.location.y = getRandomInt(130, 631);
-    mokeElement.offer.address = mokeElement.location.x + ', ' + mokeElement.location.y;
-    mokeElement.offer.price = Math.round(Math.random() * 10) * 10000 + 5000;
-    mokeElement.offer.type = INN_TYPE[getRandomInt(0, 4)];
-    mokeElement.offer.rooms = getRandomInt(1, 4);
-    mokeElement.offer.guests = getRandomInt(1, 4);
-    mokeElement.offer.checkin = CHECK_TIME[getRandomInt(0, 3)];
-    mokeElement.offer.checkout = CHECK_TIME[getRandomInt(0, 3)];
-    mokeElement.offer.description = 'Пример отличного описания ' + (i + 1);
+    mockElement.author.avatar = 'img/avatars/user0' + (i + 1) + '.png';
+    mockElement.offer.title = 'Заголовок ' + (i + 1);
+    mockElement.location.x = getRandomInt(0, 1201);
+    mockElement.location.y = getRandomInt(130, 631);
+    mockElement.offer.address = mockElement.location.x + ', ' + mockElement.location.y;
+    mockElement.offer.price = Math.round(Math.random() * 10) * 10000 + 5000;
+    mockElement.offer.type = INN_TYPES[getRandomInt(0, 4)];
+    mockElement.offer.rooms = getRandomInt(1, 4);
+    mockElement.offer.guests = getRandomInt(1, 4);
+    mockElement.offer.checkin = CHECK_HOURS[getRandomInt(0, 3)];
+    mockElement.offer.checkout = CHECK_HOURS[getRandomInt(0, 3)];
+    mockElement.offer.description = 'Пример отличного описания ' + (i + 1);
     for (var j = 0; j <= getRandomInt(0, 6); j++) {
-      mokeElement.offer.features[j] = FEATURES[j];
+      mockElement.offer.features[j] = FEATURES[j];
     }
     for (var k = 0; k <= getRandomInt(0, 3); k++) {
-      mokeElement.offer.photos[j] = PHOTOS[j];
+      mockElement.offer.photos[j] = PHOTOS[j];
     }
 
-    result[i] = mokeElement;
+    result[i] = mockElement;
   }
 
   return result;
@@ -75,9 +74,9 @@ var renderMapPin = function (pin) {
   return pinElement;
 };
 
-var moke = getMoke();
+var mock = getMock();
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < moke.length; i++) {
-  fragment.appendChild(renderMapPin(moke[i]));
+for (var i = 0; i < mock.length; i++) {
+  fragment.appendChild(renderMapPin(mock[i]));
 }
 pinList.appendChild(fragment);
