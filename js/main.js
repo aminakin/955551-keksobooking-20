@@ -3,10 +3,72 @@ var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.g
 var CHECK_HOURS = ['12:00', '13:00', '14:00'];
 var INN_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var MAPPINMAIN_WIDTH = 65;
+var MAPPINMAIN_HEIGHT = 65;
 var map = document.querySelector('.map');
-map.classList.remove('map--faded');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinList = document.querySelector('.map__pins');
+var adForm = document.querySelector('.ad-form');
+var adFormFieldsets = document.querySelectorAll('.ad-form fieldset');
+var filterFieldsets = document.querySelectorAll('.map__filters fieldset');
+var filterSelects = document.querySelectorAll('.map__filters select');
+var mapPinMain = document.querySelector('.map__pin--main');
+var address = document.querySelector('#address');
+var roomNumberSelect = document.querySelector('#room_number');
+var capacitySelect = document.querySelector('#capacity');
+
+capacitySelect.addEventListener('change', function () {
+  if (+capacitySelect.value > 0 &&  +capacitySelect.value > +roomNumberSelect.value) {
+    capacitySelect.setCustomValidity('Для этого количества гостей необходимо больше комнат');
+    capacitySelect.reportValidity();
+  }
+  else if (+capacitySelect.value === 0) {
+    capacitySelect.setCustomValidity('Для этого количества гостей выберите максимально возможное  количество комнат');
+    capacitySelect.reportValidity();
+  }
+  else {
+    capacitySelect.setCustomValidity('');
+  }
+});
+
+address.value = (+mapPinMain.style.left.replace('px', '') + Math.round(MAPPINMAIN_WIDTH/2)) + ', ' + (+mapPinMain.style.top.replace('px', '') + Math.round(MAPPINMAIN_HEIGHT/2 - 3.5));
+
+var toggleFormDisabled = function(formElements) {
+  for (var formElement of formElements) {
+    if (formElement.disabled === false) {
+      formElement.disabled = true;
+    }
+    else {
+      formElement.disabled = false;
+    }
+  }
+}
+
+toggleFormDisabled(adFormFieldsets);
+toggleFormDisabled(filterFieldsets);
+toggleFormDisabled(filterSelects);
+
+var activatePage = function () {
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  toggleFormDisabled(adFormFieldsets);
+  toggleFormDisabled(filterFieldsets);
+  toggleFormDisabled(filterSelects);
+  address.value = (+mapPinMain.style.left.replace('px', '') + Math.round(MAPPINMAIN_WIDTH/2)) + ', ' + (+mapPinMain.style.top.replace('px', '') + Math.round(MAPPINMAIN_HEIGHT + 16));
+  pinList.appendChild(fragment);
+}
+
+mapPinMain.addEventListener('mousedown', function (evt) {
+  if (evt.button === 0) {
+    activatePage();
+  }
+});
+
+mapPinMain.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    activatePage();
+  }
+});
 
 var getRandomInt = function (min, max) {
   min = Math.ceil(min);
@@ -15,7 +77,7 @@ var getRandomInt = function (min, max) {
 };
 
 var getMock = function () {
-  var result = [];
+  var results = [];
 
   for (var i = 0; i < 8; i++) {
     var mockElement = {
@@ -59,10 +121,10 @@ var getMock = function () {
       mockElement.offer.photos[j] = PHOTOS[j];
     }
 
-    result[i] = mockElement;
+    results[i] = mockElement;
   }
 
-  return result;
+  return results;
 };
 
 var renderMapPin = function (pin) {
@@ -79,4 +141,3 @@ var fragment = document.createDocumentFragment();
 for (var i = 0; i < mock.length; i++) {
   fragment.appendChild(renderMapPin(mock[i]));
 }
-pinList.appendChild(fragment);
