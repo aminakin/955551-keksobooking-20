@@ -14,12 +14,17 @@
   window.form.toggleFormDisabled(filterSelects);
 
   window.activate = function () {
-    map.classList.remove('map--faded');
-    adForm.classList.remove('ad-form--disabled');
-    window.form.toggleFormDisabled(adFormFieldsets);
-    window.form.toggleFormDisabled(filterFieldsets);
-    window.form.toggleFormDisabled(filterSelects);
-    address.value = (+mapPinMain.style.left.replace('px', '') + Math.round(window.constants.MAPPINMAIN_WIDTH / 2)) + ', ' + (+mapPinMain.style.top.replace('px', '') + Math.round(window.constants.MAPPINMAIN_HEIGHT + window.constants.PIN_NEEDLE_CORR_Y));
-    pinList.appendChild(window.map.adds);
+    if (map.classList.contains('map--faded')) {
+      map.classList.remove('map--faded');
+      adForm.classList.remove('ad-form--disabled');
+      window.form.toggleFormDisabled(adFormFieldsets);
+      window.form.toggleFormDisabled(filterFieldsets);
+      window.form.toggleFormDisabled(filterSelects);
+      address.value = (+mapPinMain.style.left.replace('px', '') + Math.round(window.constants.MAPPINMAIN_WIDTH / 2)) + ', ' + (+mapPinMain.style.top.replace('px', '') + Math.round(window.constants.MAPPINMAIN_HEIGHT + window.constants.PIN_NEEDLE_CORR_Y));
+      pinList.appendChild(window.map.adds);
+    }
+    else {
+      return
+    }
   };
 })();
