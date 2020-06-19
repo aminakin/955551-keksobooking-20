@@ -10,13 +10,11 @@
     return pinElement;
   };
 
-  var mock = window.data();
+  var mock = window.getMoke();
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < mock.length; i++) {
     fragment.appendChild(renderMapPin(mock[i]));
   }
 
-  window.map = {
-    adds: fragment
-  };
+  window.mapPinList = fragment;
 })();
