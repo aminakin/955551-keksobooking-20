@@ -7,25 +7,25 @@
     var coordX = 0;
     var coordY = 0;
 
+    var getFeaturesArray = function () {
+      var features = [];
+      for (var j = 0; j <= window.utils.getRandomInt(0, 6); j++) {
+        features[j] = window.constants.FEATURES[j];
+      }
+      return features;
+    };
+
+    var getPhotosArray = function () {
+      var photos = [];
+      for (var k = 0; k <= window.utils.getRandomInt(0, 3); k++) {
+        photos[k] = window.constants.PHOTOS[k];
+      }
+      return photos;
+    };
+
     for (var i = 0; i < 8; i++) {
       coordX = window.utils.getRandomInt(0, 1201);
       coordY = window.utils.getRandomInt(130, 631);
-
-      var getFeaturesArray = function () {
-        var features = [];
-        for (var j = 0; j <= window.utils.getRandomInt(0, 6); j++) {
-          features[j] = window.constants.FEATURES[j];
-        }
-        return features;
-      };
-
-      var getPhotosArray = function () {
-        var photos = [];
-        for (var k = 0; k <= window.utils.getRandomInt(0, 3); k++) {
-          photos[k] = window.constants.PHOTOS[k];
-        }
-        return photos;
-      };
 
       mockElement = {
         'author': {
@@ -51,7 +51,7 @@
       };
       results[i] = mockElement;
     }
-
+    console.log(results);
     return results;
   };
 })();
