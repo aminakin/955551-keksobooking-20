@@ -3,10 +3,13 @@
   var map = document.querySelector('.map');
   var pinList = document.querySelector('.map__pins');
   var adForm = document.querySelector('.ad-form');
+  var filterForm = document.querySelector('.map__filters');
   var adFormFieldsets = document.querySelectorAll('.ad-form fieldset');
   var filterFieldsets = document.querySelectorAll('.map__filters fieldset');
   var filterSelects = document.querySelectorAll('.map__filters select');
   var mapPinMain = document.querySelector('.map__pin--main');
+  var mapPinMainStyleLeft = mapPinMain.style.left;
+  var mapPinMainStyleTop = mapPinMain.style.top;
   var address = document.querySelector('#address');
 
   window.utils.toggleFormDisabled(adFormFieldsets);
@@ -20,10 +23,24 @@
       window.utils.toggleFormDisabled(adFormFieldsets);
       window.utils.toggleFormDisabled(filterFieldsets);
       window.utils.toggleFormDisabled(filterSelects);
-      address.value = (+mapPinMain.style.left.replace('px', '') + Math.round(window.constants.MAPPINMAIN_WIDTH / 2)) + ', ' + (+mapPinMain.style.top.replace('px', '') + Math.round(window.constants.MAPPINMAIN_HEIGHT + window.constants.PIN_NEEDLE_CORR_Y));
+      address.value = (+mapPinMainStyleLeft.replace('px', '') + Math.round(window.constants.MAPPINMAIN_WIDTH / 2)) + ', ' + (+mapPinMainStyleTop.replace('px', '') + Math.round(window.constants.MAPPINMAIN_HEIGHT + window.constants.PIN_NEEDLE_CORR_Y));
       pinList.appendChild(window.mapPinList);
     } else {
       return;
     }
+  };
+
+  window.deactivateMainPage = function () {
+    window.utils.clearMap();
+    adForm.reset();
+    filterForm.reset();
+    window.utils.toggleFormDisabled(adFormFieldsets);
+    window.utils.toggleFormDisabled(filterFieldsets);
+    window.utils.toggleFormDisabled(filterSelects);
+    address.value = (+mapPinMainStyleLeft.replace('px', '') + Math.round(window.constants.MAPPINMAIN_WIDTH / 2)) + ', ' + (+mapPinMainStyleTop.replace('px', '') + Math.round(window.constants.MAPPINMAIN_HEIGHT / 2 - window.constants.PIN_CORR_Y));
+    map.classList.add('map--faded');
+    adForm.classList.add('ad-form--disabled');
+    mapPinMain.style.left = mapPinMainStyleLeft;
+    mapPinMain.style.top = mapPinMainStyleTop;
   };
 })();

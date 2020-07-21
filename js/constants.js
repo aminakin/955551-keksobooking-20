@@ -5,7 +5,9 @@
   var PIN_CORR_Y = 3.5;
   var PIN_NEEDLE_CORR_Y = 16;
   var DATA_URL = 'https://javascript.pages.academy/keksobooking/data';
+  var SEND_URL = 'https://javascript.pages.academy/keksobooking';
   var GET_DATA_TIMEOUT = 5000;
+  var MAX_SHOWN_ADS = 5;
 
   window.constants = {
     MAPPINMAIN_WIDTH: MAPPINMAIN_WIDTH,
@@ -13,6 +15,8 @@
     PIN_CORR_Y: PIN_CORR_Y,
     PIN_NEEDLE_CORR_Y: PIN_NEEDLE_CORR_Y,
     DATA_URL: DATA_URL,
-    GET_DATA_TIMEOUT: GET_DATA_TIMEOUT
+    SEND_URL: SEND_URL,
+    GET_DATA_TIMEOUT: GET_DATA_TIMEOUT,
+    MAX_SHOWN_ADS: MAX_SHOWN_ADS
   };
 })();

@@ -1,7 +1,7 @@
 'use strict';
 (function () {
 
-  window.loadAdds = function (onSuccess, onError) {
+  window.loadAds = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
