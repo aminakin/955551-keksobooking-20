@@ -5,6 +5,8 @@
   var mapFilters = document.querySelector('.map__filters');
   var pinList = document.querySelector('.map__pins');
   var mapFilterSelects = document.querySelectorAll('.map__filter');
+  var mapFilterCheckboxes = document.querySelectorAll('.map__checkbox');
+  var mapFilterElements = Array.from(mapFilterSelects).concat(Array.from(mapFilterCheckboxes));
 
   var successHandler = function (ads) {
     loadedData = ads;
@@ -12,46 +14,16 @@
     window.render(loadedData);
   };
 
-  var makeFiltration = function (filterElement) {
-    switch (filterElement.id) {
-      case 'housing-type':
-        if (filterElement.value !== 'any') {
-          filteredData = filteredData.filter(function(it) {
-            return it.offer.type === filterElement.value;
-          });
-        }
-        return filteredData;
-      case 'housing-price':
-        return
-      case 'housing-rooms':
-        if (filterElement.value !== 'any') {
-          filteredData = filteredData.filter(function(it) {
-            return it.offer.rooms === +filterElement.value;
-          });
-        }
-        return filteredData;
-      case 'housing-guests':
-        if (filterElement.value !== 'any') {
-          filteredData = filteredData.filter(function(it) {
-            return it.offer.guests === +filterElement.value;
-          });
-        }
-        return filteredData;
-      default:
-        return filteredData;
-    }
+  var updateMapInfo = function () {
+    window.utils.clearMap();
+    filteredData = window.makeFiltration(mapFilterElements, loadedData);
+    window.render(filteredData);
+    pinList.appendChild(window.mapPinList);
   };
 
-    mapFilters.addEventListener('change', function(evt) {
-      window.utils.clearMap();
-      filteredData = loadedData;
-      for (var i = 0; i < mapFilterSelects.length; i++) {
-        makeFiltration(mapFilterSelects[i]);
-      }
-      console.log(filteredData);
-      window.render(filteredData);
-      pinList.appendChild(window.mapPinList);
-    });
+  mapFilters.addEventListener('change', function () {
+    window.debounce(updateMapInfo);
+  });
 
   var errorHandler = function (errorMessage) {
     var node = document.createElement('div');

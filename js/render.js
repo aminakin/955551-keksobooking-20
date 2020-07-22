@@ -2,7 +2,6 @@
 (function () {
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-  var pinList = document.querySelector('.map__pins');
   var fragmentPin = document.createDocumentFragment();
   var fragmentCard = document.createDocumentFragment();
   var renderMapPin = function (pin, adNumber) {
@@ -11,25 +10,24 @@
     pinElement.style.top = pin.location.y - 70 + 'px';
     pinElement.querySelector('img').setAttribute('src', pin.author.avatar);
     pinElement.querySelector('img').setAttribute('alt', pin.offer.title);
-    pinElement.querySelector('img').dataset.adNumber = adNumber;
     pinElement.dataset.adNumber = adNumber;
     return pinElement;
   };
 
   var getOfferType = function (offerType) {
-  switch (offerType) {
-    case 'flat':
-      return 'Квартира';
-    case 'bungalo':
-      return 'Бунгало';
-    case 'house':
-      return 'Дом';
-    case 'palace':
-      return 'Дворец';
-    default:
-      return 'Жильё';
+    switch (offerType) {
+      case 'flat':
+        return 'Квартира';
+      case 'bungalo':
+        return 'Бунгало';
+      case 'house':
+        return 'Дом';
+      case 'palace':
+        return 'Дворец';
+      default:
+        return 'Жильё';
     }
-  }
+  };
 
   var getCardPhotos = function (element, dataArray) {
     var result = document.createDocumentFragment();
@@ -38,8 +36,8 @@
       singlePhoto.setAttribute('src', dataArray[j]);
       result.appendChild(singlePhoto);
     }
-    return result
-  }
+    return result;
+  };
 
   var renderCard = function (cardData, adNumber) {
     var cardElement = cardTemplate.cloneNode(true);
@@ -74,16 +72,19 @@
     var renderCount = function () {
       if (ads.length < window.constants.MAX_SHOWN_ADS) {
         return ads.length;
-      }
-      else {
+      } else {
         return window.constants.MAX_SHOWN_ADS;
       }
+    };
+    var renderedCards = fragmentCard.querySelectorAll('article');
+    for (var m = 0; m < renderedCards.length; m++) {
+      renderedCards[m].remove();
     }
     for (var i = 0; i < renderCount(); i++) {
       fragmentPin.appendChild(renderMapPin(ads[i], i));
       fragmentCard.appendChild(renderCard(ads[i], i));
     }
-  }
+  };
   window.mapPinList = fragmentPin;
   window.mapCardList = fragmentCard;
 })();
