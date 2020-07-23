@@ -4,13 +4,13 @@
 
   mapPinMain.addEventListener('mousedown', function (evt) {
     if (evt.button === 0) {
-      window.activateMainPage();
+      window.main.activateMainPage();
     }
   });
 
   mapPinMain.addEventListener('keydown', function (evt) {
     if (evt.key === 'Enter') {
-      window.activateMainPage();
+      window.main.activateMainPage();
     }
   });
 })();

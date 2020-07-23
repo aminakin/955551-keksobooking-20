@@ -3,8 +3,8 @@
   var adSubmit = document.querySelector('.ad-form__submit');
   var formReset = document.querySelector('.ad-form__reset');
   var mainContent = document.querySelector('main');
-  var successElement = document.querySelector('#success').content.querySelector('.success');
-  var errorElement = document.querySelector('#error').content.querySelector('.error');
+  var successMessage = document.querySelector('#success').content.querySelector('.success');
+  var errorMessage = document.querySelector('#error').content.querySelector('.error');
   var onPopupPress = function (evt) {
     var message = document.querySelector('.result-popup');
     if (evt.key === 'Escape') {
@@ -20,15 +20,15 @@
     document.removeEventListener('keydown', onPopupPress);
   };
   var successHandler = function () {
-    successElement.classList.add('result-popup');
-    mainContent.appendChild(successElement);
+    successMessage.classList.add('result-popup');
+    mainContent.appendChild(successMessage);
     document.addEventListener('click', onPopupPress);
     document.addEventListener('keydown', onPopupPress);
-    window.deactivateMainPage();
+    window.main.deactivateMainPage();
   };
   var errorHandler = function () {
-    errorElement.classList.add('result-popup');
-    mainContent.appendChild(errorElement);
+    errorMessage.classList.add('result-popup');
+    mainContent.appendChild(errorMessage);
     document.addEventListener('click', onPopupPress);
     document.addEventListener('keydown', onPopupPress);
   };
@@ -37,6 +37,6 @@
     window.sendAdds(successHandler, errorHandler);
   });
   formReset.addEventListener('click', function () {
-    window.deactivateMainPage();
+    window.main.deactivateMainPage();
   });
 })();

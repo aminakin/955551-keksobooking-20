@@ -4,21 +4,19 @@
   var filteredData = [];
   var mapFilters = document.querySelector('.map__filters');
   var pinList = document.querySelector('.map__pins');
-  var mapFilterSelects = document.querySelectorAll('.map__filter');
-  var mapFilterCheckboxes = document.querySelectorAll('.map__checkbox');
-  var mapFilterElements = Array.from(mapFilterSelects).concat(Array.from(mapFilterCheckboxes));
 
   var successHandler = function (ads) {
     loadedData = ads;
     filteredData = ads;
-    window.render(loadedData);
+    window.render.renderAll(loadedData.slice(0, window.constants.MAX_SHOWN_ADS));
+    pinList.appendChild(window.render.mapPinList);
   };
 
   var updateMapInfo = function () {
     window.utils.clearMap();
-    filteredData = window.makeFiltration(mapFilterElements, loadedData);
-    window.render(filteredData);
-    pinList.appendChild(window.mapPinList);
+    filteredData = window.filters.getAdverts(loadedData);
+    window.render.renderAll(filteredData);
+    pinList.appendChild(window.render.mapPinList);
   };
 
   mapFilters.addEventListener('change', function () {
@@ -37,5 +35,8 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
-  window.loadAds(successHandler, errorHandler);
+  window.map = {
+    successHandler: successHandler,
+    errorHandler: errorHandler
+  };
 })();

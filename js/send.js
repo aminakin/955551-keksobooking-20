@@ -17,10 +17,10 @@
       showError(adFields[i]);
       if (adFields[i].checkValidity() === false) {
         showError(adFields[i]);
-        var stopSubmit = 1;
+        var stopSubmit = true;
       }
     }
-    if (stopSubmit !== 1) {
+    if (!stopSubmit) {
       var xhr = new XMLHttpRequest();
       xhr.addEventListener('load', function () {
         if (xhr.status === 200) {
